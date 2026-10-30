@@ -1,0 +1,101 @@
+Python: 3.12.3 | TensorFlow: 2.21.0 | Keras: 3.15.1 | OpenCV: 5.0.0
+GPU disponible: []
+Ejecutando en Google Colab: False
+Carpeta base: D:\Study\Deep Learning - Conceptos\Redes Neuronales V
+Imágenes encontradas: 1240
+  Personas propias (0): — ninguna (modo demostración con LFW)
+  Identidades LFW de complemento: 62 × 20 fotos
+Detector principal: MTCNN | respaldo Haar: False
+Rostros procesados: 1240 | descartados (sin rostro detectado): 0 | tiempo: 1.4 s
+Tensor del dataset: (1240, 160, 160, 3) uint8 | rango de píxeles: 0 - 255
+entrenamiento:  736 imágenes de 46 identidades
+   validacion:  184 imágenes de 46 identidades
+       prueba:  320 imágenes de 16 identidades
+Identidades LFW nunca vistas en entrenamiento: ['Ariel_Sharon', 'Atal_Bihari_Vajpayee', 'Gray_Davis', 'Guillermo_Coria', 'Hugo_Chavez', 'Jacques_Chirac', 'Jean_Chretien', 'Jennifer_Capriati', 'Jennifer_Lopez', 'Jeremy_Greenstock', 'Laura_Bush', 'Luiz_Inacio_Lula_da_Silva', 'Rudolph_Giuliani', 'Saddam_Hussein', 'Vicente_Fox', 'Winona_Ryder']
+Tripletas de validación fijas: 337 | muestra guardada en D:\Study\Deep Learning - Conceptos\Redes Neuronales V\dataset_facial\tripletas_muestra
+Model: "red_embedding"
+┌────────────────────────────────────────────┬─────────────────────────────────
+│ Layer (type)                               │ Output Shape                    
+├────────────────────────────────────────────┼─────────────────────────────────
+│ rostro (InputLayer)                        │ (None, 160, 160, 3)             
+├────────────────────────────────────────────┼─────────────────────────────────
+│ normalizacion (Rescaling)                  │ (None, 160, 160, 3)             
+├────────────────────────────────────────────┼─────────────────────────────────
+│ mobilenetv2_1.00_160 (Functional)          │ (None, 5, 5, 1280)              
+├────────────────────────────────────────────┼─────────────────────────────────
+│ pooling_global (GlobalAveragePooling2D)    │ (None, 1280)                    
+├────────────────────────────────────────────┼─────────────────────────────────
+│ dropout (Dropout)                          │ (None, 1280)                    
+├────────────────────────────────────────────┼─────────────────────────────────
+│ densa_256 (Dense)                          │ (None, 256)                     
+├────────────────────────────────────────────┼─────────────────────────────────
+│ batch_norm (BatchNormalization)            │ (None, 256)                     
+├────────────────────────────────────────────┼─────────────────────────────────
+│ embedding_128d (Dense)                     │ (None, 128)                     
+├────────────────────────────────────────────┼─────────────────────────────────
+│ normalizacion_l2 (UnitNormalization)       │ (None, 128)                     
+└────────────────────────────────────────────┴─────────────────────────────────
+ Total params: 2,619,840 (9.99 MB)
+ Trainable params: 361,344 (1.38 MB)
+ Non-trainable params: 2,258,496 (8.62 MB)
+Model: "red_siamesa_triplet"
+┌─────────────────────────────┬─────────────────────────┬────────────────┬─────
+│ Layer (type)                │ Output Shape            │        Param # │ Conn
+├─────────────────────────────┼─────────────────────────┼────────────────┼─────
+│ ancla (InputLayer)          │ (None, 160, 160, 3)     │              0 │ -   
+├─────────────────────────────┼─────────────────────────┼────────────────┼─────
+│ positiva (InputLayer)       │ (None, 160, 160, 3)     │              0 │ -   
+├─────────────────────────────┼─────────────────────────┼────────────────┼─────
+│ negativa (InputLayer)       │ (None, 160, 160, 3)     │              0 │ -   
+├─────────────────────────────┼─────────────────────────┼────────────────┼─────
+│ red_embedding (Functional)  │ (None, 128)             │      2,619,840 │ ancl
+│                             │                         │                │ posi
+│                             │                         │                │ nega
+└─────────────────────────────┴─────────────────────────┴────────────────┴─────
+ Total params: 2,619,840 (9.99 MB)
+ Trainable params: 361,344 (1.38 MB)
+ Non-trainable params: 2,258,496 (8.62 MB)
+Pesos compartidos por las 3 ramas: 2 619 840 parámetros
+                 fácil (N lejos): d(A,P)=0.40  d(A,N)=4.00  L=max(0.40 - 4.00 + 0.2, 0) = 0.00
+ semi-hard (N dentro del margen): d(A,P)=0.40  d(A,N)=0.50  L=max(0.40 - 0.50 + 0.2, 0) = 0.10
+     difícil (N más cerca que P): d(A,P)=0.80  d(A,N)=0.40  L=max(0.80 - 0.40 + 0.2, 0) = 0.60
+Antes de entrenar → pérdida val 0.1354 | exactitud de tripletas val 0.680
+Época  1 [fase 1, aleatorias] pérdida 0.1580 | activas 0.49 | pérdida val 0.1186 | exactitud val 0.772 | 37 s
+Época  2 [fase 1, aleatorias] pérdida 0.1381 | activas 0.39 | pérdida val 0.0993 | exactitud val 0.813 | 26 s
+Época  3 [fase 1, semi-hard] pérdida 0.1688 | activas 0.52 | pérdida val 0.0909 | exactitud val 0.837 | 42 s
+Época  4 [fase 1, semi-hard] pérdida 0.1798 | activas 0.54 | pérdida val 0.0772 | exactitud val 0.846 | 41 s
+Época  5 [fase 1, semi-hard] pérdida 0.1815 | activas 0.54 | pérdida val 0.0758 | exactitud val 0.861 | 39 s
+Época  6 [fase 1, semi-hard] pérdida 0.1777 | activas 0.52 | pérdida val 0.0653 | exactitud val 0.881 | 31 s
+Época  7 [fase 1, semi-hard] pérdida 0.1616 | activas 0.50 | pérdida val 0.0595 | exactitud val 0.881 | 31 s
+Época  8 [fase 1, semi-hard] pérdida 0.1710 | activas 0.52 | pérdida val 0.0573 | exactitud val 0.887 | 31 s
+Época  9 [fase 1, semi-hard] pérdida 0.1657 | activas 0.52 | pérdida val 0.0529 | exactitud val 0.899 | 31 s
+Época 10 [fase 1, semi-hard] pérdida 0.1566 | activas 0.49 | pérdida val 0.0546 | exactitud val 0.902 | 30 s
+Época 11 [fase 1, semi-hard] pérdida 0.1654 | activas 0.49 | pérdida val 0.0561 | exactitud val 0.908 | 32 s
+Época 12 [fase 1, semi-hard] pérdida 0.1531 | activas 0.49 | pérdida val 0.0539 | exactitud val 0.908 | 35 s
+Parámetros entrenables en fase 2: 2 024 704
+Época 13 [fase 2, semi-hard] pérdida 0.1849 | activas 0.52 | pérdida val 0.0606 | exactitud val 0.890 | 45 s
+Época 14 [fase 2, semi-hard] pérdida 0.1621 | activas 0.44 | pérdida val 0.0609 | exactitud val 0.887 | 33 s
+Época 15 [fase 2, semi-hard] pérdida 0.1478 | activas 0.46 | pérdida val 0.0553 | exactitud val 0.908 | 30 s
+Época 16 [fase 2, semi-hard] pérdida 0.1429 | activas 0.43 | pérdida val 0.0559 | exactitud val 0.890 | 31 s
+Época 17 [fase 2, semi-hard] pérdida 0.1333 | activas 0.46 | pérdida val 0.0546 | exactitud val 0.899 | 33 s
+Época 18 [fase 2, semi-hard] pérdida 0.1221 | activas 0.42 | pérdida val 0.0467 | exactitud val 0.899 | 38 s
+Época 19 [fase 2, semi-hard] pérdida 0.1292 | activas 0.42 | pérdida val 0.0468 | exactitud val 0.908 | 34 s
+Época 20 [fase 2, semi-hard] pérdida 0.1274 | activas 0.42 | pérdida val 0.0417 | exactitud val 0.914 | 36 s
+Época 21 [fase 2, semi-hard] pérdida 0.1235 | activas 0.43 | pérdida val 0.0496 | exactitud val 0.908 | 36 s
+Época 22 [fase 2, semi-hard] pérdida 0.1325 | activas 0.40 | pérdida val 0.0455 | exactitud val 0.914 | 32 s
+Época 23 [fase 2, semi-hard] pérdida 0.1229 | activas 0.41 | pérdida val 0.0275 | exactitud val 0.941 | 35 s
+Época 24 [fase 2, semi-hard] pérdida 0.1225 | activas 0.45 | pérdida val 0.0279 | exactitud val 0.944 | 38 s
+Época 25 [fase 2, semi-hard] pérdida 0.1302 | activas 0.46 | pérdida val 0.0272 | exactitud val 0.947 | 33 s
+Época 26 [fase 2, semi-hard] pérdida 0.1153 | activas 0.41 | pérdida val 0.0350 | exactitud val 0.935 | 33 s
+Época 27 [fase 2, semi-hard] pérdida 0.1071 | activas 0.39 | pérdida val 0.0241 | exactitud val 0.941 | 35 s
+
+Entrenamiento: 15.5 min | mejores pesos: época 27 (pérdida val 0.0241)
+[  antes] umbral τ = 0.466 | prueba: exactitud 0.631, AUC 0.695, TVP 0.449, TFP 0.188 | d intra 0.494 vs inter 0.595
+[despues] umbral τ = 1.056 | prueba: exactitud 0.774, AUC 0.859, TVP 0.727, TFP 0.179 | d intra 0.881 vs inter 1.586
+Pares de validación: 552 | pares de prueba: 6080 (3040 genuinos, 3040 impostores)
+verificar_identidad( Ariel_Sharon_001.jpg , Ariel_Sharon_005.jpg ) → {'distancia': 0.820805549621582, 'similitud_coseno': 0.589597225189209, 'umbral': 1.0564770698547363, 'misma_identidad': True, 'veredicto': 'Misma Identidad - Verificado'}
+One-shot (k=1): identificación 0.382 ± 0.042 (azar 0.062, 16 identidades) | verificación 0.767 ± 0.027
+Few-shot (k=3): identificación 0.534 ± 0.029 (azar 0.062, 16 identidades) | verificación 0.822 ± 0.017
+Few-shot (k=5): identificación 0.593 ± 0.028 (azar 0.062, 16 identidades) | verificación 0.833 ± 0.013
+Métricas guardadas en D:\Study\Deep Learning - Conceptos\Redes Neuronales V\results\metricas.json
+Figuras: ['01_dataset_original.png', '02_preprocesamiento_antes_despues.png', '03_tripletas_ejemplo.png', '04_curva_convergencia.png', '05_distancias_intra_inter_roc.png', '06_verificacion_pares.png', '07_tripletas_prueba_distancias.png', '08_one_shot_few_shot.png', '09_demo_one_shot.png', '10_demo_few_shot_k3.png', '11_demo_few_shot_k5.png', '12_tsne_embeddings.png']

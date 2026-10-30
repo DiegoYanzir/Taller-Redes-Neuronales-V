@@ -1,0 +1,18 @@
+# Dataset facial: contiene fotografías de personas reales (datos personales). NUNCA se versiona.
+dataset_facial/
+
+# Modelos entrenados (pesados; se regeneran ejecutando el notebook)
+results/modelos/
+
+# Python / Jupyter
+__pycache__/
+.ipynb_checkpoints/
+
+# Registros de error locales
+results/err_*.txt
+
+# Archivos temporales de Word
+~$*.docx
+
+# Informe Word (se entrega por separado)
+docs/
